@@ -245,6 +245,7 @@
                 </div>
             </div>
         </div>
+
         <!-- Modal Ticketing -->
         <div class="modal fade" id="ticketingModal" tabindex="-1" role="dialog" aria-labelledby="ticketingModalLabel"
             aria-hidden="true">
@@ -551,6 +552,9 @@
 
 
         $(document).ready(function() {
+            let lessonModalShouldReopen = false;
+
+            // Saat tombol detail diklik
             $('.lesson-detail').on('click', function() {
                 const id = $(this).data('id');
                 const program = $(this).data('program');
@@ -571,11 +575,11 @@
                 $('#detailAssistant').text(assistant || '-');
                 $('#detailCourseType').text(course_type || '-');
 
-                // Set form action dynamically
+                // Set form action delete
                 const deleteUrl = `{{ url('admin/lessons') }}/${id}`;
                 $('#deleteLessonForm').attr('action', deleteUrl);
 
-                // Set edit button link and event
+                // Set edit link
                 $('#editLessonBtn').attr('href', `/admin/lessons/${id}/edit`);
                 $('#editLessonBtn').off('click').on('click', function(e) {
                     e.preventDefault();
@@ -583,21 +587,31 @@
                     window.location.href = $(this).attr('href');
                 });
 
-                // Set lesson_id untuk ticketing
+                // Set lesson_id untuk ticket
                 $('#ticket_lesson_id').val(id);
 
-                // Show the modal
+                // Show modal detail
                 $('#lessonDetailModal').modal('show');
             });
 
-            // Tampilkan modal ticket ketika tombol diklik
+            // Saat tombol "Buat Ticket" diklik maka Modal ticketing terbuka
             $('#openTicketModalBtn').on('click', function() {
+                $('#lessonDetailModal').modal('hide');
+                lessonModalShouldReopen = true;
                 $('#ticketingModal').modal('show');
             });
 
-            // Reset textarea saat modal ticket dibuka
+            // Kosongkan textarea saat modal ticketing dibuka
             $('#ticketingModal').on('show.bs.modal', function() {
                 $('#ticket_description').val('');
+            });
+
+            // Saat modal ticketing ditutup, tampilkan kembali detail lesson jika perlu
+            $('#ticketingModal').on('hidden.bs.modal', function() {
+                if (lessonModalShouldReopen) {
+                    $('#lessonDetailModal').modal('show');
+                    lessonModalShouldReopen = false;
+                }
             });
         });
     </script>
