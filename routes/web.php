@@ -19,19 +19,17 @@ Route::get('/home', function () {
     $user = auth()->user();
     $routeName = $user && ($user->is_student || $user->is_teacher)
         ? 'admin.calendar.index'
-        : ($user->is_baa ? 'admin.calendar.index' : 'admin.home'); // <-- ubah di sini
+        : ($user->is_baa ? 'admin.calendar.index' : 'admin.home');
 
     return redirect()->route($routeName)->with('status', session('status'));
 });
 
-
 // Nonaktifkan register
 Auth::routes(['register' => false]);
 
-
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
     // Ganti route '/' untuk mengarah ke dashboard
-    Route::get('/', 'DashboardController@index')->name('home');  // Mengarah langsung ke DashboardController
+    Route::get('/', 'DashboardController@index')->name('home');
 
     // Permissions
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
@@ -76,27 +74,25 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('room', 'RoomController');
 });
 
-
 // Route untuk STUDENT
-
 Route::middleware(['auth'])->group(function () {
     // Home Student
-Route::get('/student/home', [StudentHomeController::class, 'index'])->name('student.home');
-Route::get('/ticket/create', [StudentTicketController::class, 'create'])->name('student.ticket.create');
-Route::post('/ticket/store', [StudentTicketController::class, 'store'])->name('student.ticket.store');    
-Route::get('/ticket/{id}/edit', [StudentTicketController::class, 'edit'])->name('ticket.edit');
-Route::put('/ticket/{id}', [StudentTicketController::class, 'update'])->name('student.ticket.update');
-Route::delete('/ticket/{id}', [StudentTicketController::class, 'destroy'])->name('student.ticket.destroy');
-Route::get('/ticketing', [StudentTicketController::class, 'history'])->name('student.ticket.index');
-Route::get('/ticket/{id}/edit', [StudentTicketController::class, 'edit'])->name('student.ticket.edit');
-
-Route::get('/ticket/history', [StudentTicketController::class, 'history'])->name('student.ticket.history');
+    Route::get('/student/home', [StudentHomeController::class, 'index'])->name('student.home');
+    Route::get('/ticket/create', [StudentTicketController::class, 'create'])->name('student.ticket.create');
+    Route::post('/ticket/store', [StudentTicketController::class, 'store'])->name('student.ticket.store');    
+    Route::get('/ticket/{id}/edit', [StudentTicketController::class, 'edit'])->name('ticket.edit');
+    Route::put('/ticket/{id}', [StudentTicketController::class, 'update'])->name('student.ticket.update');
+    Route::delete('/ticket/{id}', [StudentTicketController::class, 'destroy'])->name('student.ticket.destroy');
+    Route::get('/ticketing', [StudentTicketController::class, 'history'])->name('student.ticket.index');
+    Route::get('/ticket/{id}/edit', [StudentTicketController::class, 'edit'])->name('student.ticket.edit');
+    Route::get('/ticket/history', [StudentTicketController::class, 'history'])->name('student.ticket.history');
 });
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/baa/dashboard', [BAAController::class, 'index'])->name('baa.dashboard');
     Route::get('/baa/tickets', [BAAController::class, 'tickets'])->name('baa.tickets');
     Route::post('/baa/tickets/{id}/approve', [BAAController::class, 'approve'])->name('baa.tickets.approve');
-Route::get('baa/ticket/{id}/reject', [BAAController::class, 'showRejectForm'])->name('baa.ticket.reject.form');
-Route::post('baa/ticket/{id}/reject', [BAAController::class, 'reject'])->name('baa.ticket.reject');
+    Route::get('/baa/ticket/{id}/reject', [BAAController::class, 'showRejectForm'])->name('baa.ticket.reject.form');
+    Route::post('/baa/ticket/{id}/reject', [BAAController::class, 'reject'])->name('baa.ticket.reject');
+    Route::get('/baa/tickets/{id}', [BAAController::class, 'show'])->name('baa.tickets.show');
 });
