@@ -22,7 +22,8 @@ class TicketController extends Controller
     {
         $data = $request->validate([
             'description' => 'required|string|max:1000',
-            'role' => 'required|string|max:100'
+            'role' => 'required|string|max:100',
+            'lesson_id' => 'required|integer'
         ]);
 
         $data['name'] = Auth::user()->name;
