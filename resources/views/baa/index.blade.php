@@ -8,7 +8,6 @@
 
 @section('content')
 <div class="card">
-
     <div class="card-header">
         Pending Tickets - {{ auth()->user()->name }}
     </div>
@@ -27,7 +26,9 @@
                         <th>Role</th>
                         <th>Status</th>
                         <th>Submitted At</th>
+                        @can("ticketing_approval")
                         <th>Action</th>
+                        @endcan
                     </tr>
                 </thead>
                 <tbody>
@@ -41,35 +42,35 @@
                             <td>{{ $ticket->role }}</td>
                             <td>{{ $ticket->status }}</td>
                             <td>{{ $ticket->created_at->format('d M Y') }}</td>
+                            @can("ticketing_approval")
                             <td>
                                 <div class="d-flex flex-column gap-1">
-                                    @can("ticketing_approval")
-                                        @if($ticket->status == 'pending')
-                                            <!-- <form action="{{ route('baa.tickets.approve', $ticket->id) }}" method="POST" style="display:inline;">
-                                                @csrf
-                                                <button class="btn btn-success btn-sm w-100 mb-1">Approve</button>
-                                            </form>
-                                            <button 
-                                                type="button"
-                                                class="btn btn-danger btn-sm w-100 reject-btn"
-                                                data-toggle="modal"
-                                                data-target="#rejectModal"
-                                                data-action="{{ route('baa.ticket.reject', $ticket->id) }}">
-                                                Reject
-                                            </button> -->
-                                        @elseif($ticket->status == 'approved')
-                                            <span class="badge bg-success">Disetujui</span>
-                                        @elseif($ticket->status == 'rejected')
-                                            <span class="badge bg-danger">Ditolak</span>
-                                        @endif
-                                    @endcan
+                                    @if($ticket->status == 'pending')
+                                        <!-- <form action="{{ route('baa.tickets.approve', $ticket->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            <button class="btn btn-success btn-sm w-100 mb-1">Approve</button>
+                                        </form>
+                                        <button 
+                                            type="button"
+                                            class="btn btn-danger btn-sm w-100 reject-btn"
+                                            data-toggle="modal"
+                                            data-target="#rejectModal"
+                                            data-action="{{ route('baa.ticket.reject', $ticket->id) }}">
+                                            Reject
+                                        </button> -->
+                                    @elseif($ticket->status == 'approved')
+                                        <span class="badge bg-success">Disetujui</span>
+                                    @elseif($ticket->status == 'rejected')
+                                        <span class="badge bg-danger">Ditolak</span>
+                                    @endif
                                     <a href="{{ route('baa.tickets.show', $ticket->id) }}" class="btn btn-info btn-sm w-100 mt-1">View</a>
                                 </div>
                             </td>
+                            @endcan
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="{{ $colspan }}">No pending tickets found.</td>
+                            <td colspan="{{ auth()->user()->can('ticketing_approval') ? 6 : 5 }}">No pending tickets found.</td>
                         </tr>
                     @endforelse
                 </tbody>
@@ -87,7 +88,7 @@
         <div class="modal-header">
           <h5 class="modal-title" id="rejectModalLabel">Alasan Penolakan Ticket</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
+            <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
