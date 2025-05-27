@@ -168,84 +168,80 @@
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
+
                     <div class="modal-header">
                         <h5 class="modal-title">Detail Lesson</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                            <span>&times;</span>
                         </button>
                     </div>
 
                     <div class="modal-body">
                         <div class="container-fluid">
+
+                            <!-- Detail Fields -->
                             <div class="row mb-2">
-                                <div class="col-4 font-weight-bold">Program Studi</div>
+                                <div class="col-4 fw-bold">Program Studi</div>
                                 <div class="col-8" id="detailProgram"></div>
                             </div>
                             <div class="row mb-2">
-                                <div class="col-4 font-weight-bold">Tahun</div>
+                                <div class="col-4 fw-bold">Tahun</div>
                                 <div class="col-8" id="detailYear"></div>
                             </div>
                             <div class="row mb-2">
-                                <div class="col-4 font-weight-bold">Kelas</div>
+                                <div class="col-4 fw-bold">Kelas</div>
                                 <div class="col-8" id="detailClass"></div>
                             </div>
                             <div class="row mb-2">
-                                <div class="col-4 font-weight-bold">Mata Kuliah</div>
+                                <div class="col-4 fw-bold">Mata Kuliah</div>
                                 <div class="col-8" id="detailCourse"></div>
                             </div>
                             <div class="row mb-2">
-                                <div class="col-4 font-weight-bold">Ruangan</div>
+                                <div class="col-4 fw-bold">Ruangan</div>
                                 <div class="col-8" id="detailRoom"></div>
                             </div>
                             <div class="row mb-2">
-                                <div class="col-4 font-weight-bold">Dosen</div>
+                                <div class="col-4 fw-bold">Dosen</div>
                                 <div class="col-8" id="detailTeacher"></div>
                             </div>
                             <div class="row mb-2">
-                                <div class="col-4 font-weight-bold">Teaching Assistant</div>
+                                <div class="col-4 fw-bold">Teaching Assistant</div>
                                 <div class="col-8" id="detailAssistant"></div>
                             </div>
                             <div class="row mb-2">
-                                <div class="col-4 font-weight-bold">Course Type</div>
+                                <div class="col-4 fw-bold">Course Type</div>
                                 <div class="col-8" id="detailCourseType"></div>
                             </div>
 
+                            <!-- Actions -->
                             @can('lesson_delete')
-                                <form id="deleteLessonForm" method="POST"
-                                    onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
-                                    class="text-end mb-3 d-inline">
-                                    @method('DELETE')
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger btn-sm">
-                                        {{ trans('global.delete') }}
-                                    </button>
-                                    <a href="#" id="editLessonBtn" class="btn btn-info btn-sm ml-2">
-                                        {{ trans('global.edit') }}
-                                    </a>
-                                </form>
+                                <div class="row mb-3">
+                                    <div class="col text-end">
+                                        <form id="deleteLessonForm" method="POST"
+                                            onsubmit="return confirm('{{ trans('global.areYouSure') }}');" class="d-inline">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button type="submit"
+                                                class="btn btn-danger btn-sm">{{ trans('global.delete') }}</button>
+                                            <a href="#" id="editLessonBtn"
+                                                class="btn btn-info btn-sm ms-2">{{ trans('global.edit') }}</a>
+                                        </form>
+                                    </div>
+                                </div>
                             @endcan
 
-                            {{-- Tombol Buat Ticket untuk Mahasiswa, Dosen, TA --}}
-                            @php
-                                $user = Auth::user();
-                                $canTicket = false;
-                                if ($user) {
-                                    $roles = $user->roles->pluck('title')->map(function ($r) {
-                                        return strtolower(trim($r));
-                                    });
-                                    $canTicket =
-                                        $roles->contains('Teacher') ||
-                                        $roles->contains('Student') ||
-                                        $roles->contains('Teaching Asistant');
-                                }
-                            @endphp
-                            @if ($canTicket)
-                                <button type="button" class="btn btn-primary mt-3" id="openTicketModalBtn">
-                                    Buat Ticket
-                                </button>
-                            @endif
+                            @can('ticketing_create')
+                                <div class="row">
+                                    <div class="col text-end">
+                                        <button type="button" class="btn btn-primary mt-2" id="openTicketModalBtn">
+                                            Buat Ticket
+                                        </button>
+                                    </div>
+                                </div>
+                            @endcan
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -256,25 +252,34 @@
                 <form action="{{ route('student.ticket.store') }}" method="POST" id="ticketingForm">
                     @csrf
                     <div class="modal-content">
+
+                        <!-- Modal Header -->
                         <div class="modal-header">
                             <h5 class="modal-title" id="ticketingModalLabel">Buat Ticket</h5>
-                            <button type="button" class="close" data-dismiss="modal"
-                                aria-label="Close"><span>&times;</span></button>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span>&times;</span>
+                            </button>
                         </div>
+
+                        <!-- Modal Body -->
                         <div class="modal-body">
                             <input type="hidden" name="name" value="{{ Auth::user()->name }}">
                             <input type="hidden" name="role"
                                 value="{{ Auth::user()->roles->pluck('title')->first() }}">
                             <input type="hidden" name="lesson_id" id="ticket_lesson_id">
+
                             <div class="form-group">
                                 <label for="ticket_description">Deskripsi</label>
-                                <textarea name="description" id="ticket_description" class="form-control" required></textarea>
+                                <textarea name="description" id="ticket_description" class="form-control" rows="4" required></textarea>
                             </div>
                         </div>
+
+                        <!-- Modal Footer -->
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                             <button type="submit" class="btn btn-primary">Kirim Ticket</button>
                         </div>
+
                     </div>
                 </form>
             </div>
