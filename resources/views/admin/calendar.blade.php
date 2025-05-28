@@ -75,6 +75,22 @@
                                 class="help-block text-sm text-gray-500">{{ trans('cruds.lesson.fields.year_helper') }}</span>
                         </div>
 
+                        {{-- Semester Filter --}}
+                        <div class="w-56">
+                            <label for="semesterSelect" class="block text-gray-700 font-bold mb-2">Filter by Semester</label>
+                            <select name="semester" id="semesterSelect"
+                                class="block w-full bg-white border border-gray-300 rounded-md py-2 px-3 shadow-sm">
+                                <option value="" {{ request('semester') == '' ? 'selected' : '' }}>-- All Semesters
+                                    --</option>
+                                <option value="Ganjil" {{ request('semester') == 'Ganjil' ? 'selected' : '' }}>
+                                    Ganjil</option>
+                                <option value="Genap" {{ request('semester') == 'Genap' ? 'selected' : '' }}>Genap
+                                </option>
+                            </select>
+                            <span
+                                class="help-block text-sm text-gray-500">{{ trans('cruds.lesson.fields.semester_helper') }}</span>
+                        </div>
+
                         {{-- Course Type Filter --}}
                         <div class="w-56">
                             <label for="courseTypeSelect" class="block text-gray-700 font-bold mb-2">Filter by Course
@@ -141,6 +157,7 @@
                                                                 data-room="{{ $lesson->room_name }}"
                                                                 data-program="{{ $lesson->study_program_name }}"
                                                                 data-year="{{ $lesson->year }}"
+                                                                data-semester="{{ $lesson->semester }}"
                                                                 data-teacher="{{ $lesson->teacher_name }}"
                                                                 data-assistant="{{ $lesson->teaching_assistant_name ?? '' }}"
                                                                 data-course-type="{{ $lesson->course_type ?? '' }}">
@@ -189,6 +206,10 @@
                                 <div class="col-8" id="detailYear"></div>
                             </div>
                             <div class="row mb-2">
+                                <div class="col-4 fw-bold">Semester</div>
+                                <div class="col-8" id="detailSemester"></div>
+                            </div>
+                            <div class="row mb-2">
                                 <div class="col-4 fw-bold">Kelas</div>
                                 <div class="col-8" id="detailClass"></div>
                             </div>
@@ -205,11 +226,11 @@
                                 <div class="col-8" id="detailTeacher"></div>
                             </div>
                             <div class="row mb-2">
-                                <div class="col-4 fw-bold">Teaching Assistant</div>
+                                <div class="col-4 fw-bold">Asisten Akademik</div>
                                 <div class="col-8" id="detailAssistant"></div>
                             </div>
                             <div class="row mb-2">
-                                <div class="col-4 fw-bold">Course Type</div>
+                                <div class="col-4 fw-bold">Tipe Mata Kuliah</div>
                                 <div class="col-8" id="detailCourseType"></div>
                             </div>
 
@@ -337,6 +358,23 @@
                                             @endif
                                             <span class="help-block">{{ trans('cruds.lesson.fields.year_helper') }}</span>
                                         </div>
+
+                                        <div class="form-group">
+                                            <label class="required" for="semester">{{ trans('cruds.lesson.fields.semester') }}</label>
+                                            <select name="semester" id="semester"
+                                                class="form-control {{ $errors->has('semester') ? 'is-invalid' : '' }}" required>
+                                                {{-- <option value="">--  --</option> --}}
+                                                <option value="Ganjil" {{ old('semester') == 'Ganjil' ? 'selected' : '' }}>Ganjil</option>
+                                                <option value="Genap" {{ old('semester') == 'Genap' ? 'selected' : '' }}>Genap</option>
+                                            </select>
+                                            @if ($errors->has('semester'))
+                                                <div class="invalid-feedback">
+                                                    {{ $errors->first('semester') }}
+                                                </div>
+                                            @endif
+                                            <span class="help-block">{{ trans('cruds.lesson.fields.semester_helper') }}</span>
+                                        </div>                                                            
+
                                         <div class="form-group">
                                             <label class="required"
                                                 for="class_id">{{ trans('cruds.lesson.fields.class') }}</label>
@@ -559,6 +597,7 @@
                 const id = $(this).data('id');
                 const program = $(this).data('program');
                 const year = $(this).data('year');
+                const semester = $(this).data('semester'); // Tambahkan semester
                 const className = $(this).data('class');
                 const course = $(this).data('course');
                 const room = $(this).data('room');
@@ -568,6 +607,7 @@
 
                 $('#detailProgram').text(program);
                 $('#detailYear').text(year);
+                $('#detailSemester').text(semester); // Tampilkan semester
                 $('#detailClass').text(className);
                 $('#detailCourse').text(course);
                 $('#detailRoom').text(room);

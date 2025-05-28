@@ -55,6 +55,7 @@ class LessonsController extends Controller
             'room_id' => 'required',
             'course_type' => 'required',
             'year' => 'required',
+            'semester' => 'required',
         ]);
 
         // Cek apakah teacher sudah terjadwal di sesi dan hari yang sama
@@ -106,6 +107,7 @@ class LessonsController extends Controller
             'room_id' => $request->room_id,
             'course_type' => $request->course_type,
             'year' => $request->year,
+            'semester' => $request->semester,
         ]);
 
         return redirect()->route('admin.calendar.index')->with('success', 'Lesson added successfully.');
@@ -157,6 +159,7 @@ class LessonsController extends Controller
             'room_id' => 'required',
             'course_type' => 'required',
             'year' => 'required',
+            'semester' => 'required',
         ]);
 
         $lesson->update($request->validated());

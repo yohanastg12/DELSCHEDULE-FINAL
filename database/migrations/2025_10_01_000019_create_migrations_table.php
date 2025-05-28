@@ -6,17 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateMigrationsTable extends Migration
 {
-    public function up()
-    {
-        Schema::create('migrations', function (Blueprint $table) {
-            $table->id();
-            $table->string('migration');
-            $table->integer('batch');
-        });
-    }
+    // public function up()
+    // {
+    //     Schema::create('migrations', function (Blueprint $table) {
+    //         $table->id();
+    //         $table->string('migration');
+    //         $table->integer('batch');
+    //     });
+    // }
 
-    public function down()
-    {
-        Schema::dropIfExists('migrations');
-    }
+    // public function down()
+    // {
+    //     Schema::dropIfExists('migrations');
+    // }
 }

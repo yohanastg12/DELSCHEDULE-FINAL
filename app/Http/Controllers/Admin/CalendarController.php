@@ -24,7 +24,7 @@ class CalendarController extends Controller
         })->pluck('name', 'id');
 
         $asistant = \App\User::whereHas('roles', function ($query) {
-            $query->where('id', 6); // ID 6 = teaching asistant
+            $query->where('id', 5); // ID 6 = teaching asistant
         })->pluck('name', 'id');
 
         $lessonsQuery = DB::table('lessons')
@@ -50,6 +50,7 @@ class CalendarController extends Controller
 
         $studyProgramIdRequest = $request->input('study_program_id');
         $yearRequest = $request->input('year');
+        $semesterRequest = $request->input('semester');
         $courseType = $request->input('course_type');
 
         if ($studyProgramIdRequest) {
@@ -64,6 +65,10 @@ class CalendarController extends Controller
 
         if ($yearRequest) {
             $lessonsQuery->where('lessons.year', $yearRequest);
+        }
+
+        if ($semesterRequest) {
+            $lessonsQuery->where('lessons.semester', $semesterRequest);
         }
 
         if ($courseType) {
@@ -88,6 +93,14 @@ class CalendarController extends Controller
             ->pluck('year')
             ->toArray();
 
+        // ambil daftar semester ganjil dan genap
+        $semesters = DB::table('lessons')
+            ->whereNull('deleted_at')
+            ->selectRaw('DISTINCT semester')
+            ->orderBy('semester', 'asc')
+            ->pluck('semester')
+            ->toArray();
+
         $weekdays = Weekday::orderBy('id')->pluck('name', 'id')->toArray();
 
         $studyPrograms = StudyProgram::pluck('name', 'id');
@@ -102,7 +115,7 @@ class CalendarController extends Controller
             $calendar[$sessionId][$weekdayId][] = $lesson;
         }
 
-        return view('admin.calendar', compact('classes', 'teachers', 'lessons', 'sessions', 'courses', 'weekdays', 'studyPrograms', 'calendar', 'years', 'rooms', 'asistant'));
+        return view('admin.calendar', compact('classes', 'teachers', 'lessons', 'sessions', 'courses', 'weekdays', 'studyPrograms', 'calendar', 'years', 'semesters', 'rooms', 'asistant'));
     }
 
     public function clearLessons()

@@ -61,6 +61,11 @@ class User extends Authenticatable
         return $this->roles()->where('id', 4)->exists();
     }
 
+    public function getIsTeachingAssistantAttribute()
+    {
+        return $this->roles()->where('id', 5)->exists();
+    }
+    
     public function teacherLessons()
     {
         return $this->hasMany(Lesson::class, 'teacher_id', 'id');

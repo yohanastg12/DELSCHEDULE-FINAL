@@ -45,13 +45,13 @@ class RolesSeeder extends Seeder
                 'updated_at' => '2025-04-16 21:26:33',
                 'deleted_at' => null,
             ],
-            [
-                'id' => 6,
-                'title' => 'Head of Study Program',
-                'created_at' => '2025-04-16 21:26:33',
-                'updated_at' => '2025-04-16 21:26:33',
-                'deleted_at' => null,
-            ],
+            // [
+            //     'id' => 6,
+            //     'title' => 'Head of Study Program',
+            //     'created_at' => '2025-04-16 21:26:33',
+            //     'updated_at' => '2025-04-16 21:26:33',
+            //     'deleted_at' => null,
+            // ],
         ]);
     }
 }

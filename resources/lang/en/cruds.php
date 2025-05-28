@@ -2,8 +2,8 @@
 
 return [
     'userManagement' => [
-        'title' => 'User management',
-        'title_singular' => 'User management',
+        'title' => 'Managements',
+        'title_singular' => 'Management',
     ],
     'permission' => [
         'title' => 'Permissions',
@@ -73,7 +73,7 @@ return [
         'fields' => [
             'id' => 'ID',
             'id_helper' => '',
-            'teacher' => 'Teacher',
+            'teacher' => 'Lecturer',
             'teacher_helper' => '',
             'weekday' => 'Weekday',
             'weekday_helper' => '',
@@ -97,6 +97,8 @@ return [
             'class_helper' => '',
             'year' => 'Year',
             'year_helper' => '',
+            'semester' => 'Semester',
+            'semester_helper' => '',
             'room' => 'Room',
             'room_helper' => '',
             'course_type' => 'Course Type',
@@ -104,8 +106,8 @@ return [
         ],
     ],
     'schoolClass' => [
-        'title' => 'School Classes',
-        'title_singular' => 'School Class',
+        'title' => 'Classes',
+        'title_singular' => 'Class',
         'fields' => [
             'id' => 'ID',
             'id_helper' => '',

@@ -42,6 +42,21 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="required" for="semester">{{ trans('cruds.lesson.fields.semester') }}</label>
+                    <select name="semester" id="semester"
+                        class="form-control {{ $errors->has('semester') ? 'is-invalid' : '' }}" required>
+                        <option value="Ganjil" {{ old('semester', $lesson->semester) == 'Ganjil' ? 'selected' : '' }}>Ganjil</option>
+                        <option value="Genap" {{ old('semester', $lesson->semester) == 'Genap' ? 'selected' : '' }}>Genap</option>
+                    </select>
+                    @if ($errors->has('semester'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('semester') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.lesson.fields.semester_helper') }}</span>
+                </div>
+
+                <div class="form-group">
                     <label class="required" for="class_id">{{ trans('cruds.lesson.fields.class') }}</label>
                     <select class="form-control select2 {{ $errors->has('class') ? 'is-invalid' : '' }}" name="class_id"
                         id="class_id" required>

@@ -18,7 +18,8 @@ class Course extends Model
     ];
 
     protected $fillable = [
-        'name'
+        'name',
+        'SKS',
     ];
 
     public function lessons()

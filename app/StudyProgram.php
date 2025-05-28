@@ -19,7 +19,7 @@ class StudyProgram extends Model
 
     protected $fillable = [
         'name',
-        'end_time'
+
     ];
 
     public function lessons()
