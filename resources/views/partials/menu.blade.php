@@ -107,12 +107,12 @@ $roleName = Auth::user()->roles->first()->name ?? null;
                 </a>
             </li>
             <li class="nav-item">
-                @if ($roleId == 1 || $roleId == 2)
-                    <a href="{{ route('baa.dashboard') }}"
-                        class="nav-link {{ request()->is('baa/dashboard') ? 'active' : '' }}">
-                    @else
-                        <a href="{{ route('student.ticket.index') }}"
-                            class="nav-link {{ request()->is('admin/admin/ticketing') ? 'active' : '' }}">
+                @if ($roleId == 1)
+                    <a href="{{ route('admin.ticketing.index') }}" class="nav-link {{ request()->is('admin/ticketing') ? 'active' : '' }}">
+                @elseif ($roleId == 2)
+                    <a href="{{ route('baa.dashboard') }}" class="nav-link {{ request()->is('baa/dashboard') ? 'active' : '' }}">
+                @else
+                    <a href="{{ route('student.ticket.index') }}" class="nav-link">
                 @endif
                 <i class="fa-fw fas fa-ticket-alt nav-icon"></i>
                 Ticketing

@@ -72,6 +72,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('room', 'RoomController@index')->name('room.index');
     Route::delete('room/destroy', 'RoomController@massDestroy')->name('room.massDestroy');
     Route::resource('room', 'RoomController');
+
+    // Ticketing
+    Route::get('/ticketing', [TicketController::class, 'index'])->name('ticketing.index');
+    Route::get('/ticketing/{id}', [TicketController::class, 'show'])->name('ticketing.show');
 });
 
 // Route untuk STUDENT

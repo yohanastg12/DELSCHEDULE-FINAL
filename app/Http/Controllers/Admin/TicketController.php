@@ -13,8 +13,8 @@ class TicketController extends Controller
 {
     public function index()
     {
-        $tickets = session('tickets', []); 
-        return view('ticketing', compact('tickets'));
+        $tickets = \App\Ticket::all();
+        return view('admin.ticketing', compact('tickets'));
     }
 
     public function store(Request $request)
@@ -30,7 +30,13 @@ class TicketController extends Controller
         return redirect()->route('baa.dashboard')->with('success', 'Ticket berhasil disimpan.');
     }
 
-    
-    
-    
+    public function show($id)
+    {
+        $ticket = Ticket::findOrFail($id);
+        $lesson = null;
+        if ($ticket->lesson_id ?? false) {
+            $lesson = \App\Lesson::with(['studyProgram', 'class', 'course', 'room', 'teacher', 'teacherAssistant'])->find($ticket->lesson_id);
+        }
+        return view('admin.ticketing_show', compact('ticket', 'lesson'));
+    }
 }

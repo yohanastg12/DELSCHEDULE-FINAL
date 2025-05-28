@@ -104,3 +104,6 @@
   </div>
 </div>
 @endsection
+
+<!-- Tidak ada perubahan, file login.blade.php sudah benar di folder resources/views/auth/ -->
+<!-- Pastikan route login Laravel mengarah ke view ini. -->
