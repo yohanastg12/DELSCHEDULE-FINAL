@@ -90,12 +90,38 @@
                                 @csrf
                                 <button class="btn btn-success me-2">Approve</button>
                         </form>
-                        <a href="{{ route('baa.ticket.reject', $ticket->id) }}" class="btn btn-danger me-2">Reject</a>
+                        <a href="#" class="btn btn-danger me-2" data-toggle="modal" data-target="#rejectModal">Reject</a>
                         <a href="{{ route('baa.tickets') }}" class="btn btn-secondary">Kembali</a>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Modal Reject -->
+    <div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="rejectModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <form id="rejectForm" action="{{ route('baa.ticket.reject', $ticket->id) }}" method="POST">
+          @csrf
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="rejectModalLabel">Alasan Penolakan Ticket</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <textarea name="reject_reason" id="reject_reason" class="form-control" required></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+              <button type="submit" class="btn btn-danger">Tolak Ticket</button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
 </body>
 </html>
@@ -105,4 +131,11 @@
 @parent
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#rejectModal').on('show.bs.modal', function (event) {
+        $('#reject_reason').val('');
+    });
+});
+</script>
 @endsection
