@@ -26,32 +26,26 @@ class RolesSeeder extends Seeder
             ],
             [
                 'id' => 3,
-                'title' => 'Teacher',
+                'title' => 'Lecturer',
                 'created_at' => '2025-04-16 21:26:33',
                 'updated_at' => '2025-04-16 21:26:33',
                 'deleted_at' => null,
             ],
             [
                 'id' => 4,
-                'title' => 'Teaching Assistant',
+                'title' => 'Student',
                 'created_at' => '2025-04-16 21:26:33',
                 'updated_at' => '2025-04-16 21:26:33',
                 'deleted_at' => null,
             ],
             [
                 'id' => 5,
-                'title' => 'Student',
+                'title' => 'Teaching Assistant',
                 'created_at' => '2025-04-16 21:26:33',
                 'updated_at' => '2025-04-16 21:26:33',
                 'deleted_at' => null,
             ],
-            // [
-            //     'id' => 6,
-            //     'title' => 'Head of Study Program',
-            //     'created_at' => '2025-04-16 21:26:33',
-            //     'updated_at' => '2025-04-16 21:26:33',
-            //     'deleted_at' => null,
-            // ],
+
         ]);
     }
 }
