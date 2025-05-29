@@ -10,15 +10,15 @@ class BAAController extends Controller
 {
     public function index()
     {
-        $tickets = Ticket::where('status', 'pending')->get();
-        $ticketAdmin = Ticket::where('status', '!=', 'pending')->get();
+        $tickets = Ticket::where('status', 'pending')->orderBy('created_at', 'desc')->get();
+        $ticketAdmin = Ticket::where('status', '!=', 'pending')->orderBy('created_at', 'desc')->get();
         return view('baa.index', compact('tickets', 'ticketAdmin'));
     }
 
     public function tickets()
     {
-        $tickets = Ticket::where('status', 'pending')->get();
-        $ticketAdmin = Ticket::where('status', '!=', 'pending')->get();
+        $tickets = Ticket::where('status', 'pending')->orderBy('created_at', 'desc')->get();
+        $ticketAdmin = Ticket::where('status', '!=', 'pending')->orderBy('created_at', 'desc')->get();
         return view('baa.index', compact('tickets', 'ticketAdmin'));
     }
 

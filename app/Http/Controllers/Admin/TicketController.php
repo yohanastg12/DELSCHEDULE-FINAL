@@ -13,7 +13,7 @@ class TicketController extends Controller
 {
     public function index()
     {
-        $tickets = \App\Ticket::all();
+        $tickets = \App\Ticket::orderBy('created_at', 'desc')->get();
         return view('admin.ticketing', compact('tickets'));
     }
 
