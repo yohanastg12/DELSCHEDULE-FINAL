@@ -76,6 +76,12 @@
                         <div class="col-4 fw-bold">Course Type</div>
                         <div class="col-8">{{ $lesson->course_type ?? '-' }}</div>
                     </div>
+
+                    <div class="row mb-2">
+                        <div class="col-4 fw-bold">Semester</div>
+                        <div class="col-8">{{ $lesson->semester ?? '-' }}</div>
+                    </div>
+                    
                 @else
                     <div class="row mb-2 mt-4">
                         <div class="col-12">Tidak ada data lesson terkait untuk tiket ini.</div>

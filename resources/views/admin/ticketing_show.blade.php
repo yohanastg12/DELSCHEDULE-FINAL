@@ -24,6 +24,8 @@
                 <div class="mb-2"><strong>Dosen:</strong> {{ $lesson->teacher->name ?? '-' }}</div>
                 <div class="mb-2"><strong>Teaching Assistant:</strong> {{ $lesson->teacherAssistant->name ?? '-' }}</div>
                 <div class="mb-2"><strong>Course Type:</strong> {{ $lesson->course_type ?? '-' }}</div>
+                <div class="mb-2"><strong>Semester:</strong> {{ $lesson->semester ?? '-' }}</div>
+
             @else
                 <div class="mb-2"><em>Tidak ada data lesson terkait untuk tiket ini.</em></div>
             @endif
